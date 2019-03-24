@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Dice Simulator 2015</title>
+</head>
+<body>
+  <p id="placeholder">
+      <%= form_tag("/rolld", method: "get") do %>
+      <b>Roll </b>
+      <%= label_tag("typedice", "Type of dice to roll") %>
+      <%= text_field(:post, :typedice, size: 5, id: "typedice") %>
+      <%= label_tag("numDice", "Number of dice to roll") %>
+      <%= text_field(:post, :numDice, size: 5, id: "numdice") %>
+      <%= label_tag("plusMod", "Add to roll") %>
+      <%= text_field(:post, :plusMod, size: 5,  id: "plusmod") %>
+    <% end %>
+    <button id="button">Roll Dice</button>
+  </p>
+  <div id="details">
+  </div>
+
+</body>
+</html>

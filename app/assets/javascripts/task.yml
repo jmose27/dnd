@@ -1,0 +1,64 @@
+:container_definitions:
+  -
+      :name: "<%= vars[:name] %>"
+      :essential: true
+      :image: <%= "578523430060.dkr.ecr.#{vars[:region]}.amazonaws.com/#{vars[:repo]}:#{vars[:tag]}" %>
+      :cpu: 4096
+      :memory: 8192
+      :log_configuration:
+         :log_driver: "awslogs"
+         :options:
+           :awslogs-group: "<%= vars[:log_group] %>"
+           :awslogs-region: "<%= vars[:region] %>"
+           :awslogs-stream-prefix: "<%= vars[:name] %>"
+      :port_mappings:
+         -
+           :host_port: 22
+           :protocol: "tcp"
+           :container_port: 22
+         -
+           :host_port: 80
+           :protocol: "tcp"
+           :container_port: 80
+      :environment:
+        -
+          :name: "APP_HOST"
+          :value: "<%= vars[:host] %>"
+        -
+          :name: "AWS_PARAMETER_ENVIRONMENT"
+          :value: "<%= vars[:env] %>"
+        -
+          :name: "AWS_PARAMETER_REGION"
+          :value: "<%= vars[:region] %>"
+        -
+          :name: "CONFIGYOUR_MODE"
+          :value: "direct"
+        -
+          :name: "RACK_ENV"
+          :value: "<%= vars[:env] %>"
+        -
+          :name: "RAILS_ENV"
+          :value: "<%= vars[:env] %>"
+        -
+          :name: "RAILS_LOG_TO_STDOUT"
+          :value: "true"
+        -
+          :name: "RAILS_SERVE_STATIC_FILES"
+          :value: "true"
+        -
+          :name: "SERVER_ROLE"
+          :value: "<%= vars[:role] %>"
+        -
+          :name: "SERVER_TYPE"
+          :value: "<%= vars[:type] %>"
+        -
+          :name: "NEWRELIC_APP_NAME"
+          :value: "<%= vars[:newrelic_app_name] %>"
+:family: "<%= vars[:name] %>"
+:task_role_arn: "<%= vars[:task_role_arn]%>"
+:execution_role_arn: "<%= vars[:execution_role_arn]%>"
+:requires_compatibilities:
+  - "FARGATE"
+:network_mode: "awsvpc"
+:cpu: "4096"
+:memory: "8192"
