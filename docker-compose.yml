@@ -1,0 +1,17 @@
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      - DOCKER=true
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/srv/dnd:cached'
+    stdin_open: true
+    tty: true
+    command: sh -c 'bundle exec rails s -b 0.0.0.0'
+networks:
+  default:
+    external:
+      name: dnd_network
